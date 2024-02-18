@@ -62,8 +62,9 @@ public class EjecutableLiga {
             System.out.println("Pulsa 5 para insertar un nuevo partido");
             System.out.println("Pulsa 6 para ingresar un nuevo equipo en una liga");
             System.out.println("Pulsa 7 para ingresar un nuevo jugador");
-            System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas");         
-            System.out.println("Pulsa 9 para salir");
+            System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas");
+            System.out.println("Pulsa 9 para saber la media de goles por partido que hay en cada Liga");
+            System.out.println("Pulsa 10 para salir");
             numMenu = Integer.parseInt(sc.nextLine());
             if (numMenu == 1) {
                 clasificacionLiga(aa);
@@ -77,7 +78,7 @@ public class EjecutableLiga {
             } else if (numMenu == 4) {
                 System.out.println(aa.getMaximoGoleadorLiga());
                 System.out.println("--------------------------------");
-            } else if (numMenu == 9) {
+            } else if (numMenu == 10) {
                 break;
             }else if (numMenu == 6) {
                 ingresarEquipo(sc, aa);
@@ -85,6 +86,8 @@ public class EjecutableLiga {
                 crearJugador(sc,aa);
             } else if (numMenu == 8) {
                 verStats(sc, aa);
+            } else if (numMenu == 9) {
+                mediaGolesPartido(aa,sc);
             }
 
         } while (true);
@@ -190,5 +193,12 @@ public class EjecutableLiga {
             }
 
         }
+    }
+
+    public static void mediaGolesPartido (Liga aa, Scanner sc){
+
+        System.out.println("Has elegido ver la media de goles por partido de las diferentes ligas");
+        System.out.println("La media de goles por partido de la Liga es de " + aa.getMediaGolesPartido() + " goles por partido");
+
     }
 }

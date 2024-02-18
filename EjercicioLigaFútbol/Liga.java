@@ -11,6 +11,8 @@ public class Liga {
     private String pais;
     private String division;
     private int partidosJugadosLiga = 0;
+    private int golesTotalesLiga = 0;
+
 
     private ArrayList <Equipo> arrayeq = new ArrayList<Equipo>();
 
@@ -36,6 +38,7 @@ public class Liga {
                 team.setGolesContra(team.getGolesContra() + golesB);
                 team.setPartidosJugados(team.getPartidosJugados() + 1);
                 this.setPartidosJugadosLiga(this.partidosJugadosLiga + 1);
+                this.setGolesTotalesLiga(this.getGolesTotalesLiga() + golesA + golesB);
             }
             if (team.getNombre().equalsIgnoreCase(equipob)){
                 if (golesA < golesB){
@@ -85,6 +88,14 @@ public class Liga {
         return max;       
     }
 
+    public double getMediaGolesPartido(){
+        double mediaGoles = 0;
+
+        mediaGoles = this.getGolesTotalesLiga() / (double)this.getPartidosJugadosLiga();
+
+        return  mediaGoles;
+    }
+
     public int getPartidosJugadosLiga() {
         return partidosJugadosLiga;
     }
@@ -92,8 +103,14 @@ public class Liga {
     public void setPartidosJugadosLiga(int partidosJugadosLiga) {
         this.partidosJugadosLiga = partidosJugadosLiga;
     }
-    
-    
+
+    public int getGolesTotalesLiga() {
+        return golesTotalesLiga;
+    }
+
+    public void setGolesTotalesLiga(int golesTotalesLiga) {
+        this.golesTotalesLiga = golesTotalesLiga;
+    }
 
     public String getNombre() {
         return nombre;
