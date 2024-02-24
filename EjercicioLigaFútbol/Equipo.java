@@ -44,8 +44,8 @@ public class Equipo implements Comparable{
 
         this.arrayjug.add(p);
     }
-    
-    
+
+
 
     @Override
     public String toString() {

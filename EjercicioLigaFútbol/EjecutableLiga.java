@@ -14,12 +14,22 @@ public class EjecutableLiga {
         //Hacer menú y meter en las clases la mayoria de cosas posibles y aqui solo poner texto
         //Añadir jugadores a equipos, decir maximos goleadores de cada equipo y de la liga completa
         // Mas cosas que se me ocurran
+        ArrayList<Liga>ligas = new ArrayList<Liga>();
+
         ArrayList<Jugadores> jugadoresMadrid = new ArrayList<>();
         ArrayList<Jugadores> jugadoresBarsa = new ArrayList<>();
         ArrayList<Jugadores> jugadoresMallorca = new ArrayList<>();
         ArrayList<Jugadores> jugadoresAtleti = new ArrayList<>();
         ArrayList<Jugadores> jugadoresGetafe = new ArrayList<>();
+        ArrayList<Jugadores> jugadoresTotenham = new ArrayList<>();
+        ArrayList<Jugadores> jugadoresArsenal = new ArrayList<>();
+        ArrayList<Jugadores> jugadoresCity = new ArrayList<>();
+        ArrayList<Jugadores> jugadoresLiverpool = new ArrayList<>();
+        ArrayList<Jugadores> jugadoresChelsea = new ArrayList<>();
+
         ArrayList<Equipo> equiposEsp = new ArrayList<>();
+        ArrayList<Equipo> equiposIng = new ArrayList<>();
+        //Equipos Españoles
         Equipo a = new Equipo("Madrid", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresMadrid);
         Equipo b = new Equipo("Atleti", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresAtleti);
         Equipo c = new Equipo("Barsa", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresBarsa);
@@ -28,36 +38,57 @@ public class EjecutableLiga {
         equiposEsp.add(b);
         equiposEsp.add(c);
         equiposEsp.add(d);
-        Equipo e = new Equipo("Mallorca", "Rojo", "Gallardo", "Cartuja", 0, 0, 0, jugadoresMallorca);
+        Jugadores aaa = new Jugadores("Madrid", "Blanco", "Ancellotti", "Santiago Bernabeu", 0,0,0,jugadoresMadrid, "Bellingham", "Centrocampista", 15);
+        Jugadores bbb = new Jugadores("Madrid", "Vinicius Jr", "Delantero", 12);
+        Jugadores ccc = new Jugadores("Getafe", "Mayoral", "Delantero", 14);
+
+        jugadoresMadrid.add(aaa);
+        jugadoresMadrid.add(bbb);
+        jugadoresGetafe.add(ccc);
+        //Equipos Ingleses
+        Equipo e = new Equipo("Manchester City", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresCity);
+        Equipo f = new Equipo("Chelsea", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresChelsea);
+        Equipo g = new Equipo("Arsenal", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresArsenal);
+        Equipo h = new Equipo("Liverpool", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresLiverpool);
+        Equipo i = new Equipo("Totenham", "Rojo", "Gallardo", "Cartuja", 0, 0, 0, jugadoresTotenham);
+        equiposIng.add(e);
+        equiposIng.add(f);
+        equiposIng.add(g);
+        equiposIng.add(h);
+        equiposIng.add(i);
+        Jugadores ddd = new Jugadores("Liverpool", "Salah", "Delantero", 15);
+
+        jugadoresTotenham.add(ddd);
         Liga aa = new Liga("Liga EA", "España", "Primera", equiposEsp);
-        aa.addEquipo(e);
+        Liga bb = new Liga("Premier", "Inglaterra", "Primera", equiposIng);
+
         aa.addResultado("Madrid", 2, "Barsa", 1);
         aa.addResultado("Mallorca", 3, "Getafe", 3);
         aa.addResultado("Atleti", 3, "Getafe", 4);
         aa.addResultado("Madrid", 2, "Mallorca", 0);
 
-        Jugadores aaa = new Jugadores("Madrid", "Bellingham", "Centrocampista", 10);
-        Jugadores bbb = new Jugadores("Madrid", "Vinicius Jr", "Delantero", 12);
-        Jugadores ccc = new Jugadores("Getafe", "Mayoral", "Delantero", 14);
+        bb.addResultado("Chelsea", 2, "Totenham", 0);
+        bb.addResultado("Chelsea", 1, "Liverpool", 1);
+        bb.addResultado("Manchester City", 2, "Arsenal", 0);
+        bb.addResultado("Chelsea", 2, "Arsenal", 4);
 
-        a.addJugador(aaa);
-        a.addJugador(bbb);
-        d.addJugador(ccc);
 
+        ligas.add(aa);
+        ligas.add(bb);
         System.out.println("------Bienvenido a la nueva aplicación de deporte Total (Beta)------");
 
-        menu(sc, aa, a);
+        menu(sc, ligas, a, aa);
 
     }
 
-    public static void menu(Scanner sc, Liga aa, Equipo a) {
+    public static void menu(Scanner sc, ArrayList<Liga>ligas, Equipo a, Liga aa) {
         do {
 
             //Insertar muchos más métodos en el menú pero hacerlos en las clases y en el ejecutable solo lo visual
             int numMenu;
 
             System.out.println("MENU PRINCIPAL DEPORTE (BETA)");
-            System.out.println("Pulsa 1 para ver la clasificación de diferentes ligas (Liga EA)");
+            System.out.println("Pulsa 1 para ver la clasificación de diferentes ligas");
             System.out.println("Pulsa 2 para ver la lista de jugadores de cada equipo");
             System.out.println("Pulsa 3 para el máximo goleador del equipo que quieras");
             System.out.println("Pulsa 4 para el máximo goleador de la liga que quieras");
@@ -70,14 +101,26 @@ public class EjecutableLiga {
             System.out.println("Pulsa 11 para salir");
             numMenu = Integer.parseInt(sc.nextLine());
             if (numMenu == 1) {
-                clasificacionLiga(aa);
+                clasificacionLiga(ligas, sc);
             } else if (numMenu == 3) {
-                System.out.println(a.getMaximoGoleador());
+                String equipo;
+                System.out.println("Que equipo quieres ver su máximo goleador: ");
+                equipo = sc.nextLine();
+                for (Liga lig: ligas) {
+                    for (Equipo eqip: lig.getArrayeq()) {
+                        if (equipo.equalsIgnoreCase(eqip.getNombre())){
+                            System.out.println("El máximo goleadore del " + eqip.getNombre() + " es " + eqip.getMaximoGoleador().getNombre() +
+                            " y lleva " + eqip.getMaximoGoleador().getGoles() + " goles");
+                        }
+                    }
+
+                }
+
                 System.out.println("--------------------------------");
             } else if (numMenu == 2) {
-                mostrarJugadores(aa);
+                mostrarJugadores(ligas, sc);
             } else if (numMenu == 5) {
-                insertarPartido(sc, aa);
+                insertarPartido(sc, ligas);
             } else if (numMenu == 4) {
                 System.out.println(aa.getMaximoGoleadorLiga());
                 System.out.println("--------------------------------");
@@ -98,46 +141,79 @@ public class EjecutableLiga {
         } while (true);
     }
 
-    public static void clasificacionLiga(Liga aa) {
-        int contador = 1;
-        Collections.sort(aa.getArrayeq());
-        for (Equipo equipos : aa.getArrayeq()) {
-            System.out.println(contador + ". " + equipos.getNombre() + " " + equipos.getPuntos() + " pts");
-            contador++;
-        }
-        System.out.println("------------------------------");
+    public static void clasificacionLiga(ArrayList<Liga>ligas, Scanner sc) {
+        String pais;
+        System.out.println("Selecciona un país para ver su clasificación: ");
+        pais = sc.nextLine();
 
-    }
+        for (Liga clasi: ligas) {
+            if (pais.equalsIgnoreCase(clasi.getPais())){
+                int contador = 1;
 
-    public static void mostrarJugadores(Liga aa) {
-
-        for (Equipo equipos : aa.getArrayeq()) {
-            System.out.println("Jugadores " + equipos.getNombre());
-            System.out.println("-------------------------------");
-
-            System.out.println(equipos.getArrayjug());
-            System.out.println("-------------------------------");
+                Collections.sort(clasi.getArrayeq());
+                for (Equipo equipos : clasi.getArrayeq()) {
+                    System.out.println(contador + ". " + equipos.getNombre() + " " + equipos.getPuntos() + " pts");
+                    contador++;
+                }
+                System.out.println("------------------------------");
+            }
 
         }
 
-    }
 
-    public static void insertarPartido(Scanner sc, Liga aa) {
-        String resultado;
-        System.out.println("Has elegido introducir un nuevo resultado (Liga EA)");
-        System.out.println("Introduce el resultado en este formato (Local 0 Visitante 0)");
-        resultado = sc.nextLine();
-        String[] resultados = resultado.split(" ");
-        String equipoa = resultados[0];
-        int golesa = Integer.parseInt(resultados[1]);
-        String equipob = resultados[2];
-        int golesb = Integer.parseInt(resultados[3]);
-
-        aa.addResultado(equipoa, golesa, equipob, golesb);
-        System.out.println("Resultado añadido....................");
 
     }
-    
+
+    public static void mostrarJugadores(ArrayList<Liga>ligas, Scanner sc) {
+
+        String pais;
+        System.out.println("De que pais quieres ver los jugadores: ");
+        pais = sc.nextLine();
+
+        for (Liga jugas: ligas) {
+            if (pais.equalsIgnoreCase(jugas.getPais())){
+                for (Equipo equipos : jugas.getArrayeq()) {
+                    System.out.println("Jugadores " + equipos.getNombre());
+                    System.out.println("-------------------------------");
+                    for (Jugadores juga:equipos.getArrayjug()) {
+                        System.out.println(juga.getNombre());
+                    }
+                    System.out.println(equipos.getArrayjug());
+                    System.out.println("-------------------------------");
+
+                }
+            }
+
+        }
+
+
+
+    }
+
+    public static void insertarPartido(Scanner sc, ArrayList<Liga>ligas) {
+
+        String pais;
+        System.out.println("De que pais quieres añadir un resultado: ");
+        pais = sc.nextLine();
+        for (Liga jugas: ligas) {
+            if (pais.equalsIgnoreCase(jugas.getPais())) {
+                String resultado;
+                System.out.println("Has elegido introducir un nuevo resultado " + jugas.getNombre());
+                System.out.println("Introduce el resultado en este formato (Local 0 Visitante 0)");
+                resultado = sc.nextLine();
+                String[] resultados = resultado.split(" ");
+                String equipoa = resultados[0];
+                int golesa = Integer.parseInt(resultados[1]);
+                String equipob = resultados[2];
+                int golesb = Integer.parseInt(resultados[3]);
+
+                jugas.addResultado(equipoa, golesa, equipob, golesb);
+                System.out.println("Resultado añadido....................");
+            }
+        }
+
+    }
+    //Acabar
     public static void ingresarEquipo(Scanner sc, Liga aa){
         String nombreEquipo;
         int puntosIni;
@@ -152,6 +228,8 @@ public class EjecutableLiga {
         System.out.println("Equipo añadido a la liga......................");
 
     }
+
+    //Acabar
     public static void crearJugador(Scanner sc, Liga aa){
         String nombreEq, nombreJug, posicion;
         int goles;
@@ -168,12 +246,13 @@ public class EjecutableLiga {
         for (Equipo equipos:aa.getArrayeq()) {
 
             if (equipos.getNombre().equalsIgnoreCase(nombreEq)){
-                equipos.addJugador(nuevo);
+                equipos.getArrayjug().add(nuevo);
             }
         }
 
     }
 
+    //Acabar
     public static void verStats (Scanner sc, Liga aa){
         String equipo;
         int respuesta;
@@ -200,12 +279,17 @@ public class EjecutableLiga {
         }
     }
 
+
+    //Acabar
     public static void mediaGolesPartido (Liga aa, Scanner sc){
 
         System.out.println("Has elegido ver la media de goles por partido de las diferentes ligas");
         System.out.println("La media de goles por partido de la Liga es de " + aa.getMediaGolesPartido() + " goles por partido");
 
     }
+
+
+    //Acabar
 
     public static void fichaje (Scanner sc,Liga aa){
         String nombre;
