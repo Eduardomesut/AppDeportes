@@ -11,9 +11,7 @@ public class EjecutableLiga {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        //Hacer menú y meter en las clases la mayoria de cosas posibles y aqui solo poner texto
-        //Añadir jugadores a equipos, decir maximos goleadores de cada equipo y de la liga completa
-        // Mas cosas que se me ocurran
+
         ArrayList<Liga>ligas = new ArrayList<Liga>();
 
         ArrayList<Jugadores> jugadoresMadrid = new ArrayList<>();
@@ -84,20 +82,20 @@ public class EjecutableLiga {
     public static void menu(Scanner sc, ArrayList<Liga>ligas, Equipo a, Liga aa) {
         do {
 
-            //Insertar muchos más métodos en el menú pero hacerlos en las clases y en el ejecutable solo lo visual
+
             int numMenu;
 
             System.out.println("MENU PRINCIPAL DEPORTE (BETA)");
             System.out.println("Pulsa 1 para ver la clasificación de diferentes ligas");
             System.out.println("Pulsa 2 para ver la lista de jugadores de cada equipo");
             System.out.println("Pulsa 3 para el máximo goleador del equipo que quieras");
-            System.out.println("Pulsa 4 para el máximo goleador de la liga que quieras");
+            System.out.println("Pulsa 4 para el máximo goleador de la liga que quieras"); //Hacer bien
             System.out.println("Pulsa 5 para insertar un nuevo partido");
             System.out.println("Pulsa 6 para ingresar un nuevo equipo en una liga");
-            System.out.println("Pulsa 7 para ingresar un nuevo jugador");
-            System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas");
-            System.out.println("Pulsa 9 para saber la media de goles por partido que hay en cada Liga");
-            System.out.println("Pulsa 10 para insertar un fichaje entre dos clubes de la Liga");
+            System.out.println("Pulsa 7 para ingresar un nuevo jugador"); //Acabar con diferentes ligas
+            System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas"); //Acabar con diferentes ligas
+            System.out.println("Pulsa 9 para saber la media de goles por partido que hay en cada Liga"); //Acabar con diferentes ligas
+            System.out.println("Pulsa 10 para insertar un fichaje entre dos clubes de la Liga"); //Acabar con diferentes ligas
             System.out.println("Pulsa 11 para salir");
             numMenu = Integer.parseInt(sc.nextLine());
             if (numMenu == 1) {
@@ -127,7 +125,7 @@ public class EjecutableLiga {
             } else if (numMenu == 11) {
                 break;
             }else if (numMenu == 6) {
-                ingresarEquipo(sc, aa);
+                ingresarEquipo(sc, ligas);
             }else if (numMenu == 7){
                 crearJugador(sc,aa);
             } else if (numMenu == 8) {
@@ -213,19 +211,28 @@ public class EjecutableLiga {
         }
 
     }
-    //Acabar
-    public static void ingresarEquipo(Scanner sc, Liga aa){
+
+    public static void ingresarEquipo(Scanner sc, ArrayList<Liga> ligas){
         String nombreEquipo;
         int puntosIni;
+        String pais;
         System.out.println("---------Has elegido ingresar un nuevo equipo----------------");
         System.out.println("Dame el nombre del equipo");
         nombreEquipo = sc.nextLine();
-        Equipo nuevos = new Equipo (nombreEquipo);
-        System.out.println("Con cuantos puntos quieres que comience la liga el equipo");
-        puntosIni = Integer.parseInt(sc.nextLine());
-        nuevos.setPuntos(puntosIni);
-        aa.addEquipo(nuevos);
-        System.out.println("Equipo añadido a la liga......................");
+        System.out.println("A que país quieres enviar este equipo? ");
+        pais = sc.nextLine();
+        for (Liga ligues:ligas) {
+            if (ligues.getPais().equalsIgnoreCase(pais)){
+                Equipo nuevos = new Equipo (nombreEquipo);
+                System.out.println("Con cuantos puntos quieres que comience la liga el equipo");
+                puntosIni = Integer.parseInt(sc.nextLine());
+                nuevos.setPuntos(puntosIni);
+                ligues.addEquipo(nuevos);
+                System.out.println("Equipo añadido a la liga......................");
+            }
+        }
+
+
 
     }
 
