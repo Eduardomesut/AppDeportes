@@ -92,7 +92,7 @@ public class EjecutableLiga {
             System.out.println("Pulsa 4 para el máximo goleador de la liga que quieras"); //Hacer bien
             System.out.println("Pulsa 5 para insertar un nuevo partido");
             System.out.println("Pulsa 6 para ingresar un nuevo equipo en una liga");
-            System.out.println("Pulsa 7 para ingresar un nuevo jugador"); //Acabar con diferentes ligas
+            System.out.println("Pulsa 7 para ingresar un nuevo jugador");
             System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas"); //Acabar con diferentes ligas
             System.out.println("Pulsa 9 para saber la media de goles por partido que hay en cada Liga"); //Acabar con diferentes ligas
             System.out.println("Pulsa 10 para insertar un fichaje entre dos clubes de la Liga"); //Acabar con diferentes ligas
@@ -127,7 +127,7 @@ public class EjecutableLiga {
             }else if (numMenu == 6) {
                 ingresarEquipo(sc, ligas);
             }else if (numMenu == 7){
-                crearJugador(sc,aa);
+                crearJugador(sc,ligas);
             } else if (numMenu == 8) {
                 verStats(sc, aa);
             } else if (numMenu == 9) {
@@ -236,8 +236,8 @@ public class EjecutableLiga {
 
     }
 
-    //Acabar
-    public static void crearJugador(Scanner sc, Liga aa){
+
+    public static void crearJugador(Scanner sc, ArrayList<Liga>ligas){
         String nombreEq, nombreJug, posicion;
         int goles;
         System.out.println("Has elegido insertar un jugador");
@@ -245,18 +245,22 @@ public class EjecutableLiga {
         nombreJug = sc.nextLine();
         System.out.println("En que equipo juega");
         nombreEq = sc.nextLine();
-        System.out.println("En que posición juega");
-        posicion = sc.nextLine();
-        System.out.println("Cuantos goles ha metido");
-        goles = Integer.parseInt(sc.nextLine());
-        Jugadores nuevo = new Jugadores(nombreEq,nombreJug,posicion,goles);
-        for (Equipo equipos:aa.getArrayeq()) {
 
-            if (equipos.getNombre().equalsIgnoreCase(nombreEq)){
-                equipos.getArrayjug().add(nuevo);
+        for (Liga lig: ligas) {
+
+            for (Equipo equipos: lig.getArrayeq()) {
+                if (nombreEq.equalsIgnoreCase(equipos.getNombre())){
+                    System.out.println("En que posición juega");
+                    posicion = sc.nextLine();
+                    System.out.println("Cuantos goles ha metido");
+                    goles = Integer.parseInt(sc.nextLine());
+                    Jugadores nuevo = new Jugadores(nombreEq,nombreJug,posicion,goles);
+                    equipos.addJugador(nuevo);
+
+                }
             }
-        }
 
+        }
     }
 
     //Acabar
