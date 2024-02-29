@@ -38,7 +38,7 @@ public class EjecutableLiga {
         equiposEsp.add(d);
         Jugadores aaa = new Jugadores("Madrid", "Blanco", "Ancellotti", "Santiago Bernabeu", 0,0,0,jugadoresMadrid, "Bellingham", "Centrocampista", 15);
         Jugadores bbb = new Jugadores("Madrid", "Vinicius Jr", "Delantero", 12);
-        Jugadores ccc = new Jugadores("Getafe", "Mayoral", "Delantero", 14);
+        Jugadores ccc = new Jugadores("Getafe", "Mayoral", "Delantero", 17);
 
         jugadoresMadrid.add(aaa);
         jugadoresMadrid.add(bbb);
@@ -54,7 +54,7 @@ public class EjecutableLiga {
         equiposIng.add(g);
         equiposIng.add(h);
         equiposIng.add(i);
-        Jugadores ddd = new Jugadores("Liverpool", "Salah", "Delantero", 15);
+        Jugadores ddd = new Jugadores("Liverpool", "Salah", "Delantero", 16);
 
         jugadoresTotenham.add(ddd);
         Liga aa = new Liga("Liga EA", "España", "Primera", equiposEsp);
@@ -89,12 +89,12 @@ public class EjecutableLiga {
             System.out.println("Pulsa 1 para ver la clasificación de diferentes ligas");
             System.out.println("Pulsa 2 para ver la lista de jugadores de cada equipo");
             System.out.println("Pulsa 3 para el máximo goleador del equipo que quieras");
-            System.out.println("Pulsa 4 para el máximo goleador de la liga que quieras"); //Hacer bien
+            System.out.println("Pulsa 4 para el máximo goleador de las ligas");
             System.out.println("Pulsa 5 para insertar un nuevo partido");
             System.out.println("Pulsa 6 para ingresar un nuevo equipo en una liga");
             System.out.println("Pulsa 7 para ingresar un nuevo jugador");
-            System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas"); //Acabar con diferentes ligas
-            System.out.println("Pulsa 9 para saber la media de goles por partido que hay en cada Liga"); //Acabar con diferentes ligas
+            System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas");
+            System.out.println("Pulsa 9 para saber la media de goles por partido que hay en cada Liga");
             System.out.println("Pulsa 10 para insertar un fichaje entre dos clubes de la Liga"); //Acabar con diferentes ligas
             System.out.println("Pulsa 11 para salir");
             numMenu = Integer.parseInt(sc.nextLine());
@@ -120,7 +120,15 @@ public class EjecutableLiga {
             } else if (numMenu == 5) {
                 insertarPartido(sc, ligas);
             } else if (numMenu == 4) {
-                System.out.println(aa.getMaximoGoleadorLiga());
+                Jugadores bota = new Jugadores(null, null, null, 0);
+                for (Liga lig:ligas) {
+                    System.out.println("Máximo goleador liga " + lig.getNombre() + "(" + lig.getPais() + "): " + lig.getMaximoGoleadorLiga().getNombre() + ", " + lig.getMaximoGoleadorLiga().getGoles() + " goles");
+                    System.out.println("--------------------------------");
+                    if (lig.getMaximoGoleadorLiga().getGoles() > bota.getGoles()){
+                        bota = lig.getMaximoGoleadorLiga();
+                    }
+                }
+                System.out.println("Y la bota de oro de las ligas europeas es " + bota.getNombre() +" con "+bota.getGoles() + " goles");
                 System.out.println("--------------------------------");
             } else if (numMenu == 11) {
                 break;
@@ -129,11 +137,11 @@ public class EjecutableLiga {
             }else if (numMenu == 7){
                 crearJugador(sc,ligas);
             } else if (numMenu == 8) {
-                verStats(sc, aa);
+                verStats(sc, ligas);
             } else if (numMenu == 9) {
-                mediaGolesPartido(aa,sc);
+                mediaGolesPartido(ligas,sc);
             } else if (numMenu == 10) {
-                fichaje(sc, aa);
+                fichaje(sc, ligas);
             }
 
         } while (true);
@@ -263,46 +271,55 @@ public class EjecutableLiga {
         }
     }
 
-    //Acabar
-    public static void verStats (Scanner sc, Liga aa){
+
+    public static void verStats (Scanner sc, ArrayList<Liga>ligas){
         String equipo;
         int respuesta;
         System.out.println("Has elegido ver estadísticas detalladas de un equipo");
         System.out.println("Elige un equipo:");
-        equipo = sc.nextLine();
-        for (Equipo equipos:aa.getArrayeq()) {
-            if (equipo.equalsIgnoreCase(equipos.getNombre())){
 
-                System.out.println("Has elegido las estadisticas detalladas del " + equipos.getNombre());
-                System.out.println("Que estadistica desea ver: 1. Partidos Jugados, 2. Goles a favor ..........");
-                respuesta = Integer.parseInt(sc.nextLine());
-                if (respuesta == 1){
-                    System.out.println("El " + equipos.getNombre() + " ha jugado " + equipos.getPartidosJugados() + " partidos esta Liga");
-                }else if (respuesta == 2) {
-                    System.out.println("El" + equipos.getNombre() + "ha marcado " + equipos.getGolesFavor() + " goles a favor esta temporada");
-                }else if (respuesta == 3) {
-                    System.out.println("Se han jugado " + aa.getPartidosJugadosLiga() + " partidos en esta liga");
-                    
+        equipo = sc.nextLine();
+        for (Liga lig:ligas) {
+
+            for (Equipo equipos:lig.getArrayeq()) {
+                if (equipo.equalsIgnoreCase(equipos.getNombre())){
+
+                    System.out.println("Has elegido las estadisticas detalladas del " + equipos.getNombre());
+                    System.out.println("Que estadistica desea ver: 1. Partidos Jugados, 2. Goles a favor ..........");
+                    respuesta = Integer.parseInt(sc.nextLine());
+                    if (respuesta == 1){
+                        System.out.println("El " + equipos.getNombre() + " ha jugado " + equipos.getPartidosJugados() + " partidos esta Liga");
+                    }else if (respuesta == 2) {
+                        System.out.println("El" + equipos.getNombre() + "ha marcado " + equipos.getGolesFavor() + " goles a favor esta temporada");
+                    }else if (respuesta == 3) {
+                        System.out.println("Se han jugado " + lig.getPartidosJugadosLiga() + " partidos en esta liga");
+
+                    }
+
                 }
 
             }
 
         }
+
     }
 
 
-    //Acabar
-    public static void mediaGolesPartido (Liga aa, Scanner sc){
+
+    public static void mediaGolesPartido (ArrayList<Liga> ligas, Scanner sc){
 
         System.out.println("Has elegido ver la media de goles por partido de las diferentes ligas");
-        System.out.println("La media de goles por partido de la Liga es de " + aa.getMediaGolesPartido() + " goles por partido");
+        for (Liga lig:ligas) {
+            System.out.println("La media de goles por partido de la liga " + lig.getNombre() + " es de " + lig.getMediaGolesPartido() + " goles por partido");
+        }
+
 
     }
 
 
-    //Acabar
 
-    public static void fichaje (Scanner sc,Liga aa){
+
+    public static void fichaje (Scanner sc,ArrayList<Liga>ligas){
         String nombre;
 
         String equipoCompra;
@@ -310,25 +327,30 @@ public class EjecutableLiga {
         System.out.println("Selecciona el nombre del jugador a traspasar: ");
         nombre = sc.nextLine();
         Jugadores nuevo = new Jugadores(null,null,null,0);
+        for (Liga lig:ligas) {
+            for (Equipo equipos:lig.getArrayeq()) {
+                for (Jugadores jugador:equipos.getArrayjug()) {
+                    if (jugador.getNombre().equalsIgnoreCase(nombre)){
 
-        for (Equipo equipos:aa.getArrayeq()) {
-            for (Jugadores jugador:equipos.getArrayjug()) {
-                if (jugador.getNombre().equalsIgnoreCase(nombre)){
+                        System.out.println("A que equipo quieres traspasar a "+ jugador.getNombre() + " proveniente del " + equipos.getNombre());
+                        nuevo = jugador;
+                        equipos.getArrayjug().remove(jugador);
 
-                    System.out.println("A que equipo quieres traspasar a "+ jugador.getNombre() + " proveniente del " + equipos.getNombre());
-                    nuevo = jugador;
-                    equipos.getArrayjug().remove(jugador);
-
+                    }
                 }
             }
+
+        }
+        equipoCompra = sc.nextLine();
+        for (Liga lig:ligas) {
+            for (Equipo equipos: lig.getArrayeq()) {
+                if (equipos.getNombre().equalsIgnoreCase(equipoCompra)){
+                    equipos.getArrayjug().add(nuevo);
+                    System.out.println("Has añadido correctamente a "+ nuevo.getNombre() + " al " + equipos.getNombre());
+                }
+            }
+
         }
 
-        equipoCompra = sc.nextLine();
-        for (Equipo equipos: aa.getArrayeq()) {
-            if (equipos.getNombre().equalsIgnoreCase(equipoCompra)){
-                equipos.getArrayjug().add(nuevo);
-                System.out.println("Has añadido correctamente a "+ nuevo.getNombre() + " al " + equipos.getNombre());
-            }
-        }
     }
 }
