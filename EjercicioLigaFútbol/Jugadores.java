@@ -7,6 +7,8 @@ public class Jugadores extends Equipo{
 private String nombre;
 private String posicion;
 
+private double valorMercado;
+
 private int goles;
 
 
@@ -16,6 +18,10 @@ private int goles;
         this.posicion = posicion;
         this.goles = goles;
     }
+
+
+
+
     public Jugadores(String nombre, String nombre1, String posicion, int goles){
         super(nombre);
         this.nombre = nombre1;
@@ -24,6 +30,13 @@ private int goles;
 
     }
 
+    public double getValorMercado() {
+        return valorMercado;
+    }
+
+    public void setValorMercado(double valorMercado) {
+        this.valorMercado = valorMercado;
+    }
 
     @Override
     public String toString() {
@@ -60,3 +73,5 @@ private int goles;
         this.nombre = nombre;
     }
 }
+
+

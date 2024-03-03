@@ -39,7 +39,9 @@ public class EjecutableLiga {
         Jugadores aaa = new Jugadores("Madrid", "Blanco", "Ancellotti", "Santiago Bernabeu", 0,0,0,jugadoresMadrid, "Bellingham", "Centrocampista", 15);
         Jugadores bbb = new Jugadores("Madrid", "Vinicius Jr", "Delantero", 12);
         Jugadores ccc = new Jugadores("Getafe", "Mayoral", "Delantero", 17);
-
+        aaa.setValorMercado(160);
+        bbb.setValorMercado(120);
+        ccc.setValorMercado(35);
         jugadoresMadrid.add(aaa);
         jugadoresMadrid.add(bbb);
         jugadoresGetafe.add(ccc);
@@ -55,6 +57,7 @@ public class EjecutableLiga {
         equiposIng.add(h);
         equiposIng.add(i);
         Jugadores ddd = new Jugadores("Liverpool", "Salah", "Delantero", 16);
+        ddd.setValorMercado(80);
 
         jugadoresTotenham.add(ddd);
         Liga aa = new Liga("Liga EA", "España", "Primera", equiposEsp);
@@ -95,8 +98,9 @@ public class EjecutableLiga {
             System.out.println("Pulsa 7 para ingresar un nuevo jugador");
             System.out.println("Pulsa 8 para elegir el equipo que ver estadisticas");
             System.out.println("Pulsa 9 para saber la media de goles por partido que hay en cada Liga");
-            System.out.println("Pulsa 10 para insertar un fichaje entre dos clubes de la Liga"); //Acabar con diferentes ligas
-            System.out.println("Pulsa 11 para salir");
+            System.out.println("Pulsa 10 para insertar un fichaje entre dos clubes de la Liga");
+            System.out.println("Pulsa 11 para elegir un equipo que ver su valor total de jugadores");
+            System.out.println("Pulsa 12 para salir");
             numMenu = Integer.parseInt(sc.nextLine());
             if (numMenu == 1) {
                 clasificacionLiga(ligas, sc);
@@ -130,7 +134,7 @@ public class EjecutableLiga {
                 }
                 System.out.println("Y la bota de oro de las ligas europeas es " + bota.getNombre() +" con "+bota.getGoles() + " goles");
                 System.out.println("--------------------------------");
-            } else if (numMenu == 11) {
+            } else if (numMenu == 12) {
                 break;
             }else if (numMenu == 6) {
                 ingresarEquipo(sc, ligas);
@@ -142,6 +146,8 @@ public class EjecutableLiga {
                 mediaGolesPartido(ligas,sc);
             } else if (numMenu == 10) {
                 fichaje(sc, ligas);
+            } else if (numMenu == 11) {
+                verValorEquipo(sc, ligas);
             }
 
         } while (true);
@@ -165,9 +171,6 @@ public class EjecutableLiga {
             }
 
         }
-
-
-
     }
 
     public static void mostrarJugadores(ArrayList<Liga>ligas, Scanner sc) {
@@ -191,9 +194,6 @@ public class EjecutableLiga {
             }
 
         }
-
-
-
     }
 
     public static void insertarPartido(Scanner sc, ArrayList<Liga>ligas) {
@@ -240,14 +240,13 @@ public class EjecutableLiga {
             }
         }
 
-
-
     }
 
 
     public static void crearJugador(Scanner sc, ArrayList<Liga>ligas){
         String nombreEq, nombreJug, posicion;
         int goles;
+        double valor;
         System.out.println("Has elegido insertar un jugador");
         System.out.println("Cual es el nombre del jugador");
         nombreJug = sc.nextLine();
@@ -263,6 +262,9 @@ public class EjecutableLiga {
                     System.out.println("Cuantos goles ha metido");
                     goles = Integer.parseInt(sc.nextLine());
                     Jugadores nuevo = new Jugadores(nombreEq,nombreJug,posicion,goles);
+                    System.out.println("Cual es su valor de mercado en millones");
+                    valor = Double.parseDouble(sc.nextLine());
+                    nuevo.setValorMercado(valor);
                     equipos.addJugador(nuevo);
 
                 }
@@ -304,8 +306,6 @@ public class EjecutableLiga {
 
     }
 
-
-
     public static void mediaGolesPartido (ArrayList<Liga> ligas, Scanner sc){
 
         System.out.println("Has elegido ver la media de goles por partido de las diferentes ligas");
@@ -315,9 +315,6 @@ public class EjecutableLiga {
 
 
     }
-
-
-
 
     public static void fichaje (Scanner sc,ArrayList<Liga>ligas){
         String nombre;
@@ -352,5 +349,18 @@ public class EjecutableLiga {
 
         }
 
+    }
+
+    public static void verValorEquipo (Scanner sc, ArrayList<Liga>ligas){
+        String equipo;
+        System.out.println("Elige un equipo para ver su valor de todos sus jugadores");
+        equipo = sc.nextLine();
+        for (Liga lig:ligas) {
+            for (Equipo equipos: lig.getArrayeq()) {
+                if (equipo.equalsIgnoreCase(equipos.getNombre())){
+                    System.out.println("El valor todal de los jugadores del " + equipos.getNombre() + " son: " + equipos.valorEquipo() + " millones de euros");
+                }
+            }
+        }
     }
 }

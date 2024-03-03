@@ -77,6 +77,15 @@ public class Equipo implements Comparable{
         return max;       
     }
 
+    public double valorEquipo(){
+        double sumaValor = 0;
+        for (Jugadores jug: arrayjug) {
+            sumaValor += jug.getValorMercado();
+        }
+        return sumaValor;
+
+    }
+
     public String getNombre() {
         return nombre;
     }
