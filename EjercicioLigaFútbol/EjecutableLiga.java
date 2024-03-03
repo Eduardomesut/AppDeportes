@@ -326,16 +326,16 @@ public class EjecutableLiga {
         Jugadores nuevo = new Jugadores(null,null,null,0);
         for (Liga lig:ligas) {
             for (Equipo equipos:lig.getArrayeq()) {
-                for (Jugadores jugador:equipos.getArrayjug()) {
-                    if (jugador.getNombre().equalsIgnoreCase(nombre)){
-
-                        System.out.println("A que equipo quieres traspasar a "+ jugador.getNombre() + " proveniente del " + equipos.getNombre());
-                        nuevo = jugador;
-                        equipos.getArrayjug().remove(jugador);
-
+                for (int i = 0; i < equipos.getArrayjug().size(); i++) {
+                    if (equipos.getArrayjug().get(i).getNombre().equalsIgnoreCase(nombre)){
+                        System.out.println("A que equipo quieres traspasar a "+ equipos.getArrayjug().get(i).getNombre() + " proveniente del " + equipos.getNombre());
+                        nuevo = equipos.getArrayjug().get(i);
+                        equipos.getArrayjug().remove(equipos.getArrayjug().get(i));
+                        i--;
                     }
                 }
             }
+
 
         }
         equipoCompra = sc.nextLine();
