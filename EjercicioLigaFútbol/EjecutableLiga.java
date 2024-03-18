@@ -2,6 +2,7 @@ package Entregas.OrientadoAObjetos.EjercicioLigaFútbol;
 
 import Entregas.OrientadoAObjetos.Ejercicio4Mapas.Jugador;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
@@ -14,75 +15,71 @@ public class EjecutableLiga {
 
         ArrayList<Liga>ligas = new ArrayList<Liga>();
 
-        ArrayList<Jugadores> jugadoresMadrid = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresBarsa = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresMallorca = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresAtleti = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresGetafe = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresTotenham = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresArsenal = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresCity = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresLiverpool = new ArrayList<>();
-        ArrayList<Jugadores> jugadoresChelsea = new ArrayList<>();
+
 
         ArrayList<Equipo> equiposEsp = new ArrayList<>();
         ArrayList<Equipo> equiposIng = new ArrayList<>();
-        //Equipos Españoles
-        Equipo a = new Equipo("Madrid", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresMadrid);
-        Equipo b = new Equipo("Atleti", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresAtleti);
-        Equipo c = new Equipo("Barsa", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresBarsa);
-        Equipo d = new Equipo("Getafe", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresGetafe);
-        equiposEsp.add(a);
-        equiposEsp.add(b);
-        equiposEsp.add(c);
-        equiposEsp.add(d);
-        Jugadores aaa = new Jugadores("Madrid", "Blanco", "Ancellotti", "Santiago Bernabeu", 0,0,0,jugadoresMadrid, "Bellingham", "Centrocampista", 15);
-        Jugadores bbb = new Jugadores("Madrid", "Vinicius Jr", "Delantero", 12);
-        Jugadores ccc = new Jugadores("Getafe", "Mayoral", "Delantero", 17);
-        aaa.setValorMercado(160);
-        bbb.setValorMercado(120);
-        ccc.setValorMercado(35);
-        jugadoresMadrid.add(aaa);
-        jugadoresMadrid.add(bbb);
-        jugadoresGetafe.add(ccc);
-        //Equipos Ingleses
-        Equipo e = new Equipo("Manchester City", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresCity);
-        Equipo f = new Equipo("Chelsea", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresChelsea);
-        Equipo g = new Equipo("Arsenal", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresArsenal);
-        Equipo h = new Equipo("Liverpool", "Blanco", "Ancelloti", "Santiago Bernabeu", 0, 0, 0, jugadoresLiverpool);
-        Equipo i = new Equipo("Totenham", "Rojo", "Gallardo", "Cartuja", 0, 0, 0, jugadoresTotenham);
-        equiposIng.add(e);
-        equiposIng.add(f);
-        equiposIng.add(g);
-        equiposIng.add(h);
-        equiposIng.add(i);
-        Jugadores ddd = new Jugadores("Liverpool", "Salah", "Delantero", 16);
-        ddd.setValorMercado(80);
 
-        jugadoresTotenham.add(ddd);
         Liga aa = new Liga("Liga EA", "España", "Primera", equiposEsp);
         Liga bb = new Liga("Premier", "Inglaterra", "Primera", equiposIng);
 
-        aa.addResultado("Madrid", 2, "Barsa", 1);
-        aa.addResultado("Mallorca", 3, "Getafe", 3);
-        aa.addResultado("Atleti", 3, "Getafe", 4);
-        aa.addResultado("Madrid", 2, "Mallorca", 0);
-
-        bb.addResultado("Chelsea", 2, "Totenham", 0);
-        bb.addResultado("Chelsea", 1, "Liverpool", 1);
-        bb.addResultado("Manchester City", 2, "Arsenal", 0);
-        bb.addResultado("Chelsea", 2, "Arsenal", 4);
-
-
         ligas.add(aa);
         ligas.add(bb);
+
+        //Datos Equipos
+        Equipo nuevo;
+        String[] datos;
+        try(Scanner scFile = new Scanner(new File("C:\\Users\\Eduardo\\Desktop\\Principal\\Programación\\OrientadoAObjetos\\EjercicioLigaFútbol\\Datos.csv"))){
+            while (scFile.hasNextLine()){
+            datos = scFile.nextLine().split(",");
+            ArrayList<Jugadores>nuevos = new ArrayList<>();
+
+            nuevo = new Equipo(datos[0], datos[1],datos[2],datos[3],Integer.parseInt(datos[4]), Integer.parseInt(datos[5]),Integer.parseInt(datos[6]),nuevos);
+            if (datos[2].equalsIgnoreCase("España")){
+                equiposEsp.add(nuevo);
+
+            }
+            if (datos[2].equalsIgnoreCase("Inglaterra")) {
+                equiposIng.add(nuevo);
+            }
+            }
+
+        }catch (Exception e){
+            System.out.println("Error");
+        }
+
+        //Datos jugadores
+
+        Jugadores nuevos;
+        String [] dato;
+        Jugadores jugador;
+        try(Scanner scFile = new Scanner(new File("C:\\Users\\Eduardo\\Desktop\\Principal\\Programación\\OrientadoAObjetos\\EjercicioLigaFútbol\\MeterJugadores.csv"))){
+            while (scFile.hasNextLine()){
+                dato = scFile.nextLine().split(",");
+                jugador = new Jugadores(dato[0], dato[1],dato[2],Integer.parseInt(dato[3]));
+
+                for (Liga leagues:ligas) {
+                    for (Equipo equ:leagues.getArrayeq()) {
+                        if (equ.getNombre().equalsIgnoreCase(dato[0])){
+                            equ.addJugador(jugador);
+
+                        }
+                    }
+                }
+
+
+            }
+        }catch (Exception e){
+            System.out.println("Error");
+        }
+
         System.out.println("------Bienvenido a la nueva aplicación de deporte Total (Beta)------");
 
-        menu(sc, ligas, a, aa);
+        menu(sc, ligas);
 
     }
 
-    public static void menu(Scanner sc, ArrayList<Liga>ligas, Equipo a, Liga aa) {
+    public static void menu(Scanner sc, ArrayList<Liga>ligas) {
         do {
 
 
@@ -126,7 +123,8 @@ public class EjecutableLiga {
             } else if (numMenu == 4) {
                 Jugadores bota = new Jugadores(null, null, null, 0);
                 for (Liga lig:ligas) {
-                    System.out.println("Máximo goleador liga " + lig.getNombre() + "(" + lig.getPais() + "): " + lig.getMaximoGoleadorLiga().getNombre() + ", " + lig.getMaximoGoleadorLiga().getGoles() + " goles");
+                    System.out.println("Máximo goleador liga " + lig.getNombre() + "(" + lig.getPais() + "): "
+                            + lig.getMaximoGoleadorLiga().getNombre() + ", " + lig.getMaximoGoleadorLiga().getGoles() + " goles");
                     System.out.println("--------------------------------");
                     if (lig.getMaximoGoleadorLiga().getGoles() > bota.getGoles()){
                         bota = lig.getMaximoGoleadorLiga();
@@ -164,7 +162,8 @@ public class EjecutableLiga {
 
                 Collections.sort(clasi.getArrayeq());
                 for (Equipo equipos : clasi.getArrayeq()) {
-                    System.out.println(contador + ". " + equipos.getNombre() + " " + equipos.getPuntos() + " pts");
+                    System.out.println(contador + ". " + equipos.getNombre() + " " + equipos.getPuntos() + " pts " +
+                            equipos.getGolesFavor() + " goles a favor y " + equipos.getGolesContra() + " goles en contra");
                     contador++;
                 }
                 System.out.println("------------------------------");
@@ -187,7 +186,7 @@ public class EjecutableLiga {
                     for (Jugadores juga:equipos.getArrayjug()) {
                         System.out.println(juga.getNombre());
                     }
-                    System.out.println(equipos.getArrayjug());
+
                     System.out.println("-------------------------------");
 
                 }

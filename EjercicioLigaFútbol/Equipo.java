@@ -145,6 +145,12 @@ public class Equipo implements Comparable{
     @Override
     public int compareTo(Object o) {
         Equipo otro = (Equipo) o;
-        return otro.puntos - this.puntos;
+        if (otro.puntos == this.getPuntos()){
+
+            return (otro.golesFavor-otro.golesContra) - (this.golesFavor - this.golesContra);
+        }else{
+            return otro.puntos - this.puntos;
+        }
+
     }
 }
